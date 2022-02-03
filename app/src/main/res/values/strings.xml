@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LearnVideo</string>
+    <string name="camera_test">camera test</string>
+    <string name="camera1_test">camera1 test</string>
+    <string name="camera2_test">camera2 test</string>
+    <string name="cameraX_test">cameraX test</string>
+</resources>
