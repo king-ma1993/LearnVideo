@@ -5,6 +5,12 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera.any" /> <!-- 需要设备有相机 -->
+    <!--需要设备有相机-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +28,7 @@
         </activity>
         <activity android:name=".camera.CameraTestActivity"></activity>
         <activity android:name=".camera.CameraXActivity"></activity>
+        <activity android:name=".camera.Camera2Activity"></activity>
     </application>
 
 </manifest>
