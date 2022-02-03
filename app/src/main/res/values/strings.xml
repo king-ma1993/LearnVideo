@@ -4,4 +4,6 @@
     <string name="camera1_test">camera1 test</string>
     <string name="camera2_test">camera2 test</string>
     <string name="cameraX_test">cameraX test</string>
+    <string name="switch_camera">switch camera</string>
+    <string name="take_photo">Take Photo</string>
 </resources>
