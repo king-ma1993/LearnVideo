@@ -25,6 +25,7 @@ class CameraTestActivity : AppCompatActivity() {
 
     private fun initView() {
         activityCameraTestBinding.camera1Test.setOnClickListener {
+            Camera1Activity.startCamera1Activity(this)
         }
         activityCameraTestBinding.camera2Test.setOnClickListener {
             Camera2Activity.startCamera2Activity(this)

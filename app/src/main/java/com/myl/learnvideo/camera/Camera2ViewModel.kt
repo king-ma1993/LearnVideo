@@ -65,10 +65,10 @@ class Camera2ViewModel : ViewModel() {
     /**
      * 初始化相机，和配置相关属性
      */
-    fun initCamera(context: Context, mTextureView: TextureView) {
+    fun initCamera(context: Context, textureView: TextureView) {
         initOrientations()
         this.context = context
-        this.textureView = mTextureView
+        this.textureView = textureView
         try {
             //获取相机服务 CameraManager
             cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
