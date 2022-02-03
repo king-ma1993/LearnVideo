@@ -21,7 +21,7 @@ object PhotoUtils {
         context.sendBroadcast(
             Intent(
                 Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                Uri.fromFile(File(fromFile.getParent()))
+                Uri.fromFile(File(fromFile.parent))
             )
         )
     }
