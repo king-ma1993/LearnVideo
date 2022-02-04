@@ -30,6 +30,7 @@
         <activity android:name=".camera.CameraXActivity"></activity>
         <activity android:name=".camera.Camera2Activity"></activity>
         <activity android:name=".camera.Camera1Activity"></activity>
+        <activity android:name=".mediaplayer.MediaPlayerTestActivity"></activity>
     </application>
 
 </manifest>

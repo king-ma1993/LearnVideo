@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.myl.learnvideo.camera.CameraTestActivity
 import com.myl.learnvideo.databinding.ActivityMainBinding
+import com.myl.learnvideo.mediaplayer.MediaPlayerTestActivity
 import com.serenegiant.dialog.MessageDialogFragmentV4
 import com.serenegiant.system.BuildCheck
 import com.serenegiant.system.PermissionCheck
@@ -61,6 +62,9 @@ class MainActivity : AppCompatActivity(), MessageDialogFragmentV4.MessageDialogL
     private fun initView() {
         activityMainBinding.cameraTest.setOnClickListener {
             CameraTestActivity.startCameraTestActivity(this)
+        }
+        activityMainBinding.mediaPlayerTest.setOnClickListener {
+            MediaPlayerTestActivity.startMediaPlayerActivity(this)
         }
     }
 
