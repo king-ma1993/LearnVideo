@@ -67,10 +67,9 @@ class SimplePlayer {
         extractor.release()
     }
 
-    fun stop() {
-        playTask?.requestStop()
+    private fun requestStop() {
+        mIsStopRequested = true
     }
-
     private fun doExtract() {
         if (extractor == null || mediaCodec == null) {
             throw RuntimeException("please init player first!!")
@@ -79,7 +78,7 @@ class SimplePlayer {
         var firstInputTimeNsec: Long = -1
         var outputDone = false
         var inputDone = false
-        while (!outputDone){
+        while (!outputDone) {
             if (mIsStopRequested) {
                 Log.d(TAG, "Stop requested")
                 return
@@ -187,7 +186,7 @@ class SimplePlayer {
     }
 
     fun pause() {
-        playTask?.waitForStop()
+        playTask?.requestStop()
     }
 
     fun play() {
@@ -248,7 +247,7 @@ class SimplePlayer {
          * Called from arbitrary thread.
          */
         fun requestStop() {
-            mPlayer.stop()
+            mPlayer.requestStop()
         }
 
         /**

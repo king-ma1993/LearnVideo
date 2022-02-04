@@ -7,10 +7,10 @@ import android.os.Bundle
 import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
 import com.myl.learnvideo.R
-import com.myl.learnvideo.databinding.ActivityMediaplayerBinding
+import com.myl.learnvideo.databinding.ActivitySimpleplayerBinding
 
 class SimplePlayerActivity : AppCompatActivity(), SurfaceHolder.Callback {
-    private lateinit var activityMediaPlayerBinding: ActivityMediaplayerBinding
+    private lateinit var activitySimpleplayerBinding: ActivitySimpleplayerBinding
 
     private lateinit var simplePlayer: SimplePlayer
 
@@ -27,26 +27,23 @@ class SimplePlayerActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMediaPlayerBinding = ActivityMediaplayerBinding.inflate(layoutInflater)
-        setContentView(activityMediaPlayerBinding.root)
+        activitySimpleplayerBinding = ActivitySimpleplayerBinding.inflate(layoutInflater)
+        setContentView(activitySimpleplayerBinding.root)
         initView()
         simplePlayer = SimplePlayer()
     }
 
     private fun initView() {
-        val surfaceHolder = activityMediaPlayerBinding.sfvShow.holder
+        val surfaceHolder = activitySimpleplayerBinding.sfvShow.holder
         surfaceHolder.addCallback(this)
         val display = windowManager.defaultDisplay
         surfaceHolder.setFixedSize(display.width, display.height)   //显示的分辨率,不设置为视频默认
-        activityMediaPlayerBinding.btnStart.setOnClickListener {
+        activitySimpleplayerBinding.btnStart.setOnClickListener {
             simplePlayer.setLoopMode(true)
             simplePlayer.play()
         }
-        activityMediaPlayerBinding.btnPause.setOnClickListener {
+        activitySimpleplayerBinding.btnPause.setOnClickListener {
             simplePlayer.pause()
-        }
-        activityMediaPlayerBinding.btnStop.setOnClickListener {
-            simplePlayer.stop()
         }
     }
 
