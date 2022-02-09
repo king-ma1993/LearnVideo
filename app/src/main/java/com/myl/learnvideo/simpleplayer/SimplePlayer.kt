@@ -87,7 +87,6 @@ class SimplePlayer {
                 mediaCodec?.dequeueInputBuffer(DECODE_TIME_OUT)?.takeIf { it >= 0 }?.let { index ->
                     val inputBuffer = mediaCodec?.getInputBuffer(index)
                     inputBuffer?.let {
-//                    val sampleSize = extractor.readSampleData(inputBuffer, 0)
                         // Read the sample data into the ByteBuffer.  This neither respects nor
                         // updates inputBuf's position, limit, etc.
                         val chunkSize = extractor.readSampleData(inputBuffer, 0)
