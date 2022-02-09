@@ -1,11 +1,13 @@
 package com.myl.learnvideo.utils
 
 object TimeUtils {
-    const val S_TO_MS = 1000
-    const val S_TO_US = 1000_000
+    private const val S_TO_MS = 1000
+    private const val S_TO_US = 1000_000
 
-    const val MS_TO_US = 1000
-    const val US_TO_MS = 1000
+    private const val MS_TO_US = 1000
+    private const val US_TO_MS = 1000
+    private const val US_TO_NS = 1000
+    private const val S_TO_NS = 1 * 1000 * 1000 * 1000
 
     fun sToMs(s: Float): Long {
         return (s * S_TO_MS).toLong()
@@ -41,6 +43,14 @@ object TimeUtils {
 
     fun usToMs(us: Long): Long {
         return us / MS_TO_US
+    }
+
+    fun sToNs(s: Long): Long {
+        return s / S_TO_NS
+    }
+
+    fun usToNs(s: Long): Long {
+        return s * US_TO_NS
     }
 
     fun msToUs(ms: Long): Long {
