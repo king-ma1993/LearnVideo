@@ -24,7 +24,7 @@ import android.view.TextureView
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.myl.learnvideo.camera.Constants.getCachePath
+import com.myl.learnvideo.Constants.getCachePath
 import com.myl.learnvideo.utils.BitmapUtils
 import com.myl.learnvideo.utils.CloseUtils
 import com.myl.learnvideo.utils.PhotoUtils.saveBitmap2Gallery

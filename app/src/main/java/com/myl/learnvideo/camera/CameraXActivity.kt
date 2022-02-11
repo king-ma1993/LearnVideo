@@ -13,7 +13,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.myl.learnvideo.camera.Constants.getCachePath
+import com.myl.learnvideo.Constants.getCachePath
 import com.myl.learnvideo.databinding.ActivityCameraxBinding
 import com.myl.learnvideo.utils.PhotoUtils
 import java.io.File

@@ -7,6 +7,7 @@ import android.os.Message
 import android.view.Choreographer
 import android.view.WindowManager
 import com.myl.learnvideo.utils.TimeUtils
+import kotlin.math.abs
 
 class VideoFrameReleaseTimeHelper private constructor(defaultDisplayRefreshRate: Double) {
 
@@ -55,7 +56,7 @@ class VideoFrameReleaseTimeHelper private constructor(defaultDisplayRefreshRate:
 
     private var useDefaultDisplayVsync = false
     private var vsyncSampler: VSyncSampler? = null
-    private var vsyncDurationNs: Long = 0
+    var vsyncDurationNs: Long = 0
     private var vsyncOffsetNs: Long = 0
     private var lastFramePresentationTimeUs: Long = 0
     private var frameCount: Long = 0
@@ -158,7 +159,7 @@ class VideoFrameReleaseTimeHelper private constructor(defaultDisplayRefreshRate:
     private fun isDriftTooLarge(frameTimeNs: Long, releaseTimeNs: Long): Boolean {
         val elapsedFrameTimeNs = frameTimeNs - syncFramePresentationTimeNs
         val elapsedReleaseTimeNs = releaseTimeNs - syncUnadjustedReleaseTimeNs
-        return Math.abs(elapsedReleaseTimeNs - elapsedFrameTimeNs) > MAX_ALLOWED_DRIFT_NS
+        return abs(elapsedReleaseTimeNs - elapsedFrameTimeNs) > MAX_ALLOWED_DRIFT_NS
     }
 
     private fun closestVsync(
