@@ -42,7 +42,11 @@ class CodecState(
     }
 
     fun release() {
-        mCodec.stop()
+        try {
+            mCodec.stop()
+        } catch (th: Throwable) {
+            th.printStackTrace()
+        }
         mCodecInputBuffers = arrayOf()
         mCodecOutputBuffers = arrayOf()
 
@@ -137,11 +141,12 @@ class CodecState(
         return if (mAudioTrack != null) {
             val buffer = mCodecOutputBuffers[index] /*mCodec.getOutputBuffer(index)*/
             buffer?.apply {
+//                buffer.clear()
+//                val audioBuffer = ByteBuffer.allocate(buffer.remaining())
+//                audioBuffer.put(buffer)
+//                audioBuffer.clear()
+                mAudioTrack?.write(buffer, info.size, TimeUtils.usToNs(info.presentationTimeUs))
                 buffer.clear()
-                val audioBuffer = ByteBuffer.allocate(buffer.remaining())
-                audioBuffer.put(buffer)
-                audioBuffer.clear()
-                mAudioTrack?.write(audioBuffer, info.size, TimeUtils.usToNs(info.presentationTimeUs))
             }
             mCodec.releaseOutputBuffer(index, false)
             mPresentationTimeUs = info.presentationTimeUs
