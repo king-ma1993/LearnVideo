@@ -23,8 +23,8 @@ class CodecState(
     private val mLimitQueueDepth: Boolean
 ) {
 
-    //    private var mCodecInputBuffers: Array<ByteBuffer> = arrayOf()
-//    private var mCodecOutputBuffers: Array<ByteBuffer> = arrayOf()
+    private var mCodecInputBuffers: Array<ByteBuffer> = arrayOf()
+    private var mCodecOutputBuffers: Array<ByteBuffer> = arrayOf()
     private var mAvailableInputBufferIndices: LinkedList<Int> = LinkedList<Int>()
     private var mAvailableOutputBufferIndices: LinkedList<Int> = LinkedList<Int>()
     private var mAvailableOutputBufferInfos: LinkedList<MediaCodec.BufferInfo> = LinkedList<MediaCodec.BufferInfo>()
@@ -43,8 +43,8 @@ class CodecState(
 
     fun release() {
         mCodec.stop()
-//        mCodecInputBuffers = arrayOf()
-//        mCodecOutputBuffers = arrayOf()
+        mCodecInputBuffers = arrayOf()
+        mCodecOutputBuffers = arrayOf()
 
         mAvailableInputBufferIndices.clear()
         mAvailableOutputBufferIndices.clear()
@@ -57,8 +57,8 @@ class CodecState(
 
     fun start() {
         mCodec.start()
-//        mCodecInputBuffers = mCodec.inputBuffers
-//        mCodecOutputBuffers = mCodec.outputBuffers
+        mCodecInputBuffers = mCodec.inputBuffers
+        mCodecOutputBuffers = mCodec.outputBuffers
         mAudioTrack?.play()
     }
 
@@ -109,7 +109,7 @@ class CodecState(
             mOutputFormat = mCodec.outputFormat
             onOutputFormatChanged()
         } else if (indexOutput == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
-//            mCodecOutputBuffers = mCodec.outputBuffers
+            mCodecOutputBuffers = mCodec.outputBuffers
         } else if (indexOutput != MediaCodec.INFO_TRY_AGAIN_LATER) {
             mAvailableOutputBufferIndices.add(indexOutput)
             mAvailableOutputBufferInfos.add(info)
@@ -135,7 +135,7 @@ class CodecState(
             return false
         }
         return if (mAudioTrack != null) {
-            val buffer =/* mCodecOutputBuffers[index]*/ mCodec.getOutputBuffer(index)
+            val buffer = mCodecOutputBuffers[index] /*mCodec.getOutputBuffer(index)*/
             buffer?.apply {
                 buffer.clear()
                 val audioBuffer = ByteBuffer.allocate(buffer.remaining())
@@ -217,7 +217,7 @@ class CodecState(
             return false
         }
         val index = mAvailableInputBufferIndices.peekFirst().toInt()
-        val codecData = mCodec.getInputBuffer(index)/*mCodecInputBuffers[index]*/
+        val codecData = /*mCodec.getInputBuffer(index)*/mCodecInputBuffers[index]
         val trackIndex = mExtractor.sampleTrackIndex
         if (trackIndex == mTrackIndex) {
             val sampleSize = codecData?.let { mExtractor.readSampleData(it, 0) } ?: 0
