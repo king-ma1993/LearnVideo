@@ -3,8 +3,8 @@ package com.myl.learnvideo.syncplayer.decode
 import android.media.MediaCodec
 import android.media.MediaExtractor
 import android.media.MediaFormat
-import android.net.Uri
 import android.util.Log
+import android.view.SurfaceHolder
 import com.myl.learnvideo.Constants
 
 /**
@@ -14,12 +14,13 @@ import com.myl.learnvideo.Constants
  * @date 2022/2/11 3:45 下午
  */
 class VideoDecoder(
-    private val mediaTimeProvider: IMediaTimeProvider
+    private val mediaTimeProvider: IMediaTimeProvider,
+    private val mSurfaceHolder: SurfaceHolder,
 ) : IDecoder {
 
     private val mVideoExtractor: MediaExtractor = MediaExtractor()
     private var mVideoCodecStates: HashMap<Int, CodecState>? = null
-    private var mVideoUri: Uri? = null
+    private var mVideoPath: String? = null
     private val decoderHelper: DecoderHelper = DecoderHelper()
     private var mMediaFormatHeight = 0
     private var mMediaFormatWidth = 0
@@ -30,7 +31,7 @@ class VideoDecoder(
     }
 
     override fun prepare(): Boolean {
-        mVideoExtractor.setDataSource(mVideoUri.toString(), null)
+        mVideoExtractor.setDataSource(mVideoPath.toString(), null)
         if (null == mVideoCodecStates) {
             mVideoCodecStates = HashMap()
         } else {
@@ -66,8 +67,8 @@ class VideoDecoder(
         return true
     }
 
-    override fun setDataSource(uri: Uri) {
-        mVideoUri = uri
+    override fun setDataSource(path: String) {
+        mVideoPath = path
     }
 
     override fun addTrack(trackIndex: Int, format: MediaFormat): Boolean {
@@ -80,12 +81,67 @@ class VideoDecoder(
             )
             return false
         }
-        mediaCodec.configure(format, null, null, 0)
+        mediaCodec.configure(format, mSurfaceHolder.surface, null, 0)
         val codecState = CodecState(
             mediaTimeProvider, mVideoExtractor,
             trackIndex, format, mediaCodec, true
         )
         mVideoCodecStates?.put(Integer.valueOf(trackIndex), codecState)
         return true
+    }
+
+    override fun start() {
+        for (state: CodecState in mVideoCodecStates?.values ?: emptyList()) {
+            state.start()
+        }
+    }
+
+    override fun doSomeWork() {
+        try {
+            for (state: CodecState in mVideoCodecStates?.values ?: emptyList()) {
+                state.doSomeWork()
+            }
+        } catch (e: IllegalStateException) {
+            throw Error("Video CodecState.doSomeWork$e")
+        }
+    }
+
+    override fun pause() {
+        for (state: CodecState in mVideoCodecStates?.values ?: emptyList()) {
+            state.pause()
+        }
+    }
+
+    override fun flush() {
+        for (state: CodecState in mVideoCodecStates?.values ?: emptyList()) {
+            state.flush()
+        }
+    }
+
+    override fun release() {
+        for (state: CodecState in mVideoCodecStates?.values ?: emptyList()) {
+            state.release()
+        }
+        mVideoExtractor.release()
+    }
+
+    override fun isEnded(): Boolean {
+        for (state: CodecState in mVideoCodecStates?.values ?: emptyList()) {
+            if (!state.isEnded()) {
+                return false
+            }
+        }
+        return true
+    }
+
+    fun getPositionUs(): Int {
+        var positionUs: Long = 0
+        for (state: CodecState in mVideoCodecStates?.values ?: emptyList()) {
+            val trackPositionUs: Long = state.getCurrentPositionUs()
+            if (trackPositionUs > positionUs) {
+                positionUs = trackPositionUs
+            }
+        }
+        return ((positionUs + 500) / 1000).toInt()
     }
 }

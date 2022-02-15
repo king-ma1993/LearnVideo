@@ -200,8 +200,7 @@ class VideoFrameReleaseTimeHelper private constructor(defaultDisplayRefreshRate:
 
         private val choreographerOwnerThread: HandlerThread =
             HandlerThread(HANDLER_THREAD_NAME)
-        private val handler: Handler = Handler(choreographerOwnerThread.looper, this)
-        private val vSyncSampler: VSyncSampler = VSyncSampler()
+        private var handler: Handler? = null
         private var choreographer: Choreographer? = null
         private var observerCount = 0
 
@@ -210,11 +209,12 @@ class VideoFrameReleaseTimeHelper private constructor(defaultDisplayRefreshRate:
 
         init {
             choreographerOwnerThread.start()
-            handler.sendEmptyMessage(CREATE_CHOREOGRAPHER)
+            handler = Handler(choreographerOwnerThread.looper, this)
+            handler?.sendEmptyMessage(CREATE_CHOREOGRAPHER)
         }
 
         fun getInstance(): VSyncSampler {
-            return vSyncSampler
+            return this
         }
 
         /**
@@ -222,7 +222,7 @@ class VideoFrameReleaseTimeHelper private constructor(defaultDisplayRefreshRate:
          * [.sampledVsyncTimeNs], and hence that the value should be periodically updated.
          */
         fun addObserver() {
-            handler.sendEmptyMessage(MSG_ADD_OBSERVER)
+            handler?.sendEmptyMessage(MSG_ADD_OBSERVER)
         }
 
         /**
@@ -230,7 +230,7 @@ class VideoFrameReleaseTimeHelper private constructor(defaultDisplayRefreshRate:
          * [.sampledVsyncTimeNs].
          */
         fun removeObserver() {
-            handler.sendEmptyMessage(MSG_REMOVE_OBSERVER)
+            handler?.sendEmptyMessage(MSG_REMOVE_OBSERVER)
         }
 
         override fun doFrame(vsyncTimeNs: Long) {

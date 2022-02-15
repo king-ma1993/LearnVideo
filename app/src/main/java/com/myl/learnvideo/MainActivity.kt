@@ -10,6 +10,7 @@ import com.myl.learnvideo.camera.CameraTestActivity
 import com.myl.learnvideo.databinding.ActivityMainBinding
 import com.myl.learnvideo.mediaplayer.MediaPlayerTestActivity
 import com.myl.learnvideo.simpleplayer.SimplePlayerActivity
+import com.myl.learnvideo.syncplayer.SyncPlayerActivity
 import com.serenegiant.dialog.MessageDialogFragmentV4
 import com.serenegiant.system.BuildCheck
 import com.serenegiant.system.PermissionCheck
@@ -69,6 +70,9 @@ class MainActivity : AppCompatActivity(), MessageDialogFragmentV4.MessageDialogL
         }
         activityMainBinding.samplePlayerTest.setOnClickListener {
             SimplePlayerActivity.startSimplePlayerActivity(this)
+        }
+        activityMainBinding.syncPlayerTest.setOnClickListener {
+            SyncPlayerActivity.startSyncPlayerActivity(this)
         }
     }
 

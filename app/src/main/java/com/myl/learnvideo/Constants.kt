@@ -10,6 +10,7 @@ object Constants {
 
     const val MIME_TYPE_AUDIO = "audio/"
     const val MIME_TYPE_VIDEO = "video/"
-
+    const val INVALID_TIME = -1L
+    const val SEPARATE = "/"
 
 }

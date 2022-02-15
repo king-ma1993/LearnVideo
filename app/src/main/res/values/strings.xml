@@ -3,6 +3,7 @@
     <string name="camera_test">camera test</string>
     <string name="mediaPlayer_test">mediaPlayer test</string>
     <string name="sample_player_test">simPlayer test</string>
+    <string name="sync_player_test">syncPlayer test</string>
     <string name="camera1_test">camera1 test</string>
     <string name="camera2_test">camera2 test</string>
     <string name="cameraX_test">cameraX test</string>

@@ -3,7 +3,6 @@ package com.myl.learnvideo.syncplayer.decode
 import android.media.MediaCodec
 import android.media.MediaExtractor
 import android.media.MediaFormat
-import android.net.Uri
 import android.util.Log
 import com.myl.learnvideo.Constants.MIME_TYPE_AUDIO
 
@@ -13,7 +12,7 @@ class AudioDecoder(
 
     private val mAudioExtractor: MediaExtractor = MediaExtractor()
     private var mAudioCodecStates: HashMap<Int, CodecState>? = null
-    private var mAudioUri: Uri? = null
+    private var mAudioUri: String? = null
     var mDurationUs: Long = 0
     private val decoderHelper: DecoderHelper = DecoderHelper()
     var mAudioTrackState: CodecState? = null
@@ -60,8 +59,8 @@ class AudioDecoder(
         return true
     }
 
-    override fun setDataSource(uri: Uri) {
-        mAudioUri = uri
+    override fun setDataSource(path: String) {
+        mAudioUri = path
     }
 
 
@@ -82,6 +81,50 @@ class AudioDecoder(
         )
         mAudioCodecStates?.put(Integer.valueOf(trackIndex), codecState)
         mAudioTrackState = codecState
+        return true
+    }
+
+    override fun start() {
+        for (state: CodecState in mAudioCodecStates?.values ?: emptyList()) {
+            state.start()
+        }
+    }
+
+    override fun doSomeWork() {
+        try {
+            for (state: CodecState in mAudioCodecStates?.values ?: emptyList()) {
+                state.doSomeWork()
+            }
+        } catch (e: IllegalStateException) {
+            throw Error("Audio CodecState.doSomeWork$e")
+        }
+    }
+
+    override fun pause() {
+        for (state: CodecState in mAudioCodecStates?.values?: emptyList()) {
+            state.pause()
+        }
+    }
+
+    override fun flush() {
+        for (state: CodecState in mAudioCodecStates?.values?: emptyList()) {
+            state.flush()
+        }
+    }
+
+    override fun release() {
+        for (state: CodecState in mAudioCodecStates?.values?: emptyList()) {
+            state.release()
+        }
+        mAudioExtractor.release()
+    }
+
+    override fun isEnded(): Boolean {
+        for (state: CodecState in mAudioCodecStates?.values?: emptyList()) {
+            if (!state.isEnded()){
+                return false
+            }
+        }
         return true
     }
 }

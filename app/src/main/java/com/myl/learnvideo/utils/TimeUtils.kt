@@ -45,8 +45,12 @@ object TimeUtils {
         return us / MS_TO_US
     }
 
+    fun nsToUs(ns: Long): Long {
+        return ns / US_TO_NS
+    }
+
     fun sToNs(s: Long): Long {
-        return s / S_TO_NS
+        return s * S_TO_NS
     }
 
     fun usToNs(s: Long): Long {
@@ -56,6 +60,7 @@ object TimeUtils {
     fun msToUs(ms: Long): Long {
         return ms * MS_TO_US
     }
+
 
     fun currentTimeUs(): Long {
         return System.currentTimeMillis() * MS_TO_US

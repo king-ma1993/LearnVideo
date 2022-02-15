@@ -33,4 +33,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mediaPlayer_test" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sync_player_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sync_player_test"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sample_player_test" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
