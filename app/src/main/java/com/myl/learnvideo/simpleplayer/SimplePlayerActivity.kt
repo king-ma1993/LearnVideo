@@ -21,7 +21,7 @@ class SimplePlayerActivity : AppCompatActivity(), SurfaceHolder.Callback {
     }
 
     private val videoPath by lazy {
-        resources.openRawResourceFd(R.raw.sample_video)
+        resources.openRawResourceFd(R.raw.test_video)
     }
 
 

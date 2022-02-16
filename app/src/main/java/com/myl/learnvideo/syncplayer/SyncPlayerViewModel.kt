@@ -18,7 +18,7 @@ class SyncPlayerViewModel : ViewModel() {
     }
 
     fun prepare() {
-        mPlayer = MediaPlayer.create(context, R.raw.sample_video)
+        mPlayer = MediaPlayer.create(context, R.raw.test_video)
 //        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
         surfaceView?.holder?.apply {
             mPlayer.setDisplay(this)
