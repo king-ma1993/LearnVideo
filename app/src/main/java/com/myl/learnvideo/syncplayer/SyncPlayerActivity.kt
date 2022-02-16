@@ -75,7 +75,7 @@ class SyncPlayerActivity : AppCompatActivity(), SurfaceHolder.Callback {
     }
 
     private fun getTestVideoPath(): String {
-        return ResCopyHelper.getTestDirPath(this) + SEPARATE + TEST_RES + SEPARATE + "test_video.mp4"
+        return ResCopyHelper.getTestDirPath(this) + SEPARATE + TEST_RES + SEPARATE + "test_video.mov"
     }
 }
 
